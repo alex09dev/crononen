@@ -52,39 +52,26 @@ function start() {
 	if (typeof control != "undefined") {
 		clearInterval(control)
 	}
+
 	if (s === 0 && min === 0 && h === 0) return
 
-	document.querySelector(".mas").querySelectorAll("button").forEach(async function(btn) {
-		btn.animate(
-		  [
-			{
-			  opacity: "1"
-			},
-			{
-			  opacity: "0"
-			}
-		  ], 1000)
-	  
-		  setTimeout(function () {
-			btn.style.opacity = "0"
-		  }, 1000)
-	  })	
+	document
+		.querySelector(".mas")
+		.querySelectorAll("button")
+		.forEach(function (btn) {
+			btn.classList.toggle("invisible")
+			btn.disabled = !btn.disabled
+		})
 
-	  document.querySelector(".menos").querySelectorAll("button").forEach(async function(btn) {
-		btn.animate(
-		  [
-			{
-			  opacity: "1"
-			},
-			{
-			  opacity: "0"
-			}
-		  ], 1000)
-	  
-		  setTimeout(function () {
-			btn.style.opacity = "0"
-		  }, 1000)
-	  })	
+	document
+		.querySelector(".menos")
+		.querySelectorAll("button")
+		.forEach(function (btn) {
+			btn.classList.toggle("invisible")
+			btn.disabled = !btn.disabled
+		})
+
+	document.querySelector(".num").classList.add("scale")
 
 	control = setInterval(time, 1000)
 }
@@ -92,12 +79,31 @@ function start() {
 function stop() {
 	if (typeof control != "undefined") {
 		clearInterval(control)
+
+		document
+			.querySelector(".mas")
+			.querySelectorAll("button")
+			.forEach(function (btn) {
+				btn.classList.toggle("invisible")
+				btn.disabled = !btn.disabled
+			})
+
+		document
+			.querySelector(".menos")
+			.querySelectorAll("button")
+			.forEach(function (btn) {
+				btn.classList.toggle("invisible")
+				btn.disabled = !btn.disabled
+			})
+
+		document.querySelector(".num").classList.remove("scale")
 	}
 }
 
 function reset() {
 	if (typeof control != "undefined") {
 		clearInterval(control)
+		control = undefined
 	}
 	document.querySelector(".num").innerText = `00 : 00 : 00`
 	s = 0
@@ -111,16 +117,19 @@ function showButton() {
 		.querySelector(".mas")
 		.querySelectorAll("button")
 		.forEach(function (btn) {
-			btn.style.opacity = "1"
+			btn.classList.remove("invisible")
 			btn.disabled = false
 		})
+
 	document
 		.querySelector(".menos")
 		.querySelectorAll("button")
 		.forEach(function (btn) {
-			btn.style.opacity = "1"
+			btn.classList.remove("invisible")
 			btn.disabled = false
 		})
+
+	document.querySelector(".num").classList.remove("scale")
 }
 
 //estrellas
